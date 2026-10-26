@@ -42,6 +42,41 @@
     if (href === here) link.classList.add("active");
   });
 
+  // ASCII portrait: characters appear in random order while a greeting types
+  // and vanish while it deletes. The typewriter drives it, so both stay in step.
+  // Hidden characters become spaces, so every row keeps its length and the
+  // portrait never shifts or resizes.
+  var portraitEl = document.getElementById("portrait");
+  var portraitChars = portraitEl ? portraitEl.textContent.split("") : [];
+  var portraitInk = []; // indexes of visible characters, in reveal order
+  var portraitRank = []; // portraitRank[charIndex] = position in reveal order
+  portraitChars.forEach(function (ch, i) {
+    if (ch !== " " && ch !== "\n") portraitInk.push(i);
+  });
+
+  function shufflePortrait() {
+    for (var i = portraitInk.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = portraitInk[i];
+      portraitInk[i] = portraitInk[j];
+      portraitInk[j] = tmp;
+    }
+    portraitInk.forEach(function (charIndex, rank) {
+      portraitRank[charIndex] = rank;
+    });
+  }
+
+  function drawPortrait(fraction) {
+    if (!portraitEl) return;
+    var shown = Math.round(fraction * portraitInk.length);
+    portraitEl.textContent = portraitChars
+      .map(function (ch, i) {
+        var rank = portraitRank[i];
+        return rank === undefined || rank < shown ? ch : " ";
+      })
+      .join("");
+  }
+
   // Typewriter greeting: cycles the name through several languages,
   // typing and backspacing in a loop. Skipped entirely for
   // prefers-reduced-motion — shows the plain English greeting instead.
@@ -68,8 +103,10 @@
       function typePhrase(phrase, onDone) {
         var i = 0;
         nameHeading.dir = phrase.dir;
+        shufflePortrait(); // new reveal order for each greeting
         (function step() {
           typewriterEl.textContent = phrase.text.slice(0, i);
+          drawPortrait(i / phrase.text.length);
           i++;
           if (i <= phrase.text.length) {
             setTimeout(step, TYPE_MS);
@@ -83,6 +120,7 @@
         var i = phrase.text.length;
         (function step() {
           typewriterEl.textContent = phrase.text.slice(0, i);
+          drawPortrait(i / phrase.text.length);
           i--;
           if (i >= 0) {
             setTimeout(step, DELETE_MS);

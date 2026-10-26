@@ -150,7 +150,63 @@ footer {
   padding: 20px 0;
 }
 
-/* Home page */
+/* Home page: center all content across and down, between the two rules. */
+main.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+main.home .tagline,
+main.home .social-row,
+main.home nav.main-nav {
+  justify-content: center;
+}
+
+/* Full width, because an inline-size container has no width of its own. */
+.portrait-wrap {
+  container-type: inline-size;
+  width: 100%;
+}
+
+/* 100 columns x 0.6em glyph width = 60em. Shrinks to fit narrow screens. */
+.portrait {
+  width: max-content;
+  font-size: min(7px, 100cqi / 60);
+  line-height: 1;
+  margin: 0 auto 20px;
+  text-align: left;
+  white-space: pre;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Rainbow fill that moves across the text. The gradient starts and ends on
+   the same color, and a shift of 200% is one full gradient width, so the
+   loop has no seam. Used by the portrait and the greeting. */
+.rainbow {
+  background: linear-gradient(90deg, #ff6b6b, #ffb86b, #f9f871, #6bff95, #6bd6ff, #b18bff, #ff6b6b);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbow 6s linear infinite;
+}
+
+@keyframes rainbow {
+  to {
+    background-position: 200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rainbow {
+    animation: none;
+  }
+}
+
 .name {
   font-size: 28px;
   font-weight: 700;
@@ -189,9 +245,34 @@ footer {
   flex-wrap: wrap;
 }
 
+.interests,
+.roles {
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+
+.interests em,
+.roles em {
+  color: var(--fg);
+}
+
 .location {
   color: var(--muted);
   margin: 0 0 40px;
+}
+
+.location .place {
+  color: var(--accent);
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
+.location .place:hover {
+  color: var(--accent-hover);
+}
+
+.tagline .apple-red {
+  color: #ff453a;
 }
 
 .tagline .icon {
