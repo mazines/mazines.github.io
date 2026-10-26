@@ -22,13 +22,15 @@
   font-display: swap;
 }
 
+/* Slate theme. Contrast on --bg: fg 12.7:1, muted 6.6:1, accent 7.0:1
+   (WCAG AA for body text is 4.5:1). */
 :root {
-  --bg: #1e1e1e;
-  --fg: #d4d4d4;
-  --muted: #6a737d;
-  --accent: #569cd6;
+  --bg: #22272e;
+  --fg: #e6edf3;
+  --muted: #a3adb8;
+  --accent: #6cb6ff;
   --accent-hover: #4ec9b0;
-  --border: #2d2d2d;
+  --border: #373e47;
   color-scheme: dark;
 }
 
