@@ -342,8 +342,16 @@ h1.page-title {
 }
 
 /* Skills page */
+/* Two columns for easier scanning; groups fill top to bottom. One column
+   when a column would be narrower than 280px. */
+.skill-columns {
+  columns: 2 280px;
+  column-gap: 40px;
+}
+
 .skill-group {
   margin-bottom: 36px;
+  break-inside: avoid;
 }
 
 .skill-group h2 {
