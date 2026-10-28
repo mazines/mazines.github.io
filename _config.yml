@@ -1,0 +1,4 @@
+# skills/ stays in the repo: the GitHub profile README's tech stack is
+# generated from skills/index.html. It is not published, so /skills is a 404.
+exclude:
+  - skills
